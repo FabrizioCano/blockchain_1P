@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Prueba ZK-SNARK</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: #333333;
+            margin-bottom: 1.5rem;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            color: #333333;
+        }
+
+        .success {
+            color: #28a745;
+        }
+
+        .error {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verificación de Prueba ZK-SNARK</h1>
+        <button onclick="verifyProof()">Verificar Prueba</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script src="./node_modules/snarkjs/build/snarkjs.min.js"></script>
+    <script>
+        async function verifyProof() {
+            const resultElement = document.getElementById("result");
+            resultElement.textContent = "Verificando...";
+            resultElement.classList.remove("success", "error");
+
+            try {
+                // Cargar la clave de verificación, la prueba y las señales públicas
+                const verificationKey = await fetch('./circuito_js/verification_key.json').then(res => res.json());
+                const proof = await fetch('proof.json').then(res => res.json());
+                const publicSignals = await fetch('public.json').then(res => res.json());
+
+                // Verificar la prueba
+                const isValid = await snarkjs.groth16.verify(verificationKey, publicSignals, proof);
+
+                // Mostrar el resultado
+                if (isValid) {
+                    resultElement.textContent = "La prueba es válida.";
+                    resultElement.classList.add("success");
+                } else {
+                    resultElement.textContent = "La prueba no es válida.";
+                    resultElement.classList.add("error");
+                }
+            } catch (error) {
+                console.error("Error durante la verificación:", error);
+                resultElement.textContent = "Error durante la verificación. Revisa la consola para más detalles.";
+                resultElement.classList.add("error");
+            }
+        }
+    </script>
+</body>
+</html>
