@@ -1,8 +1,4 @@
 pragma circom 2.2.2; 
-
-
-
-
 //Template para calcular la suma de dos numeros
 template Suma(){
     //declaracion de señales
