@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "snarkjs": "^0.7.5",
-    "websnark": "^0.0.5"
-  }
-}

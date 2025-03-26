@@ -50,7 +50,7 @@ snarkjs groth16 prove circuito_0001.zkey ../witness.wtns ../proof.json ../public
 snarkjs groth16 prove circuito_0001.zkey ../witness.wtns ../proof.json ../public.json
 ```
 - Verificacion en nodejs:
-``verify.js```:  en este archivo se utiliza la libreria snarkjs para manejar las operaciones de verificacion. Si la prueba es valida imprime ``Proof valid:True``
+```verify.js```:  en este archivo se utiliza la libreria snarkjs para manejar las operaciones de verificacion. Si la prueba es valida imprime ``Proof valid:True``
 - Verificacion en un navegador:
 ``index.hmtl``: en este archivo se utiliza snarkjs para probar el verificador en un navegador
 
@@ -66,4 +66,10 @@ input.json:
     "b": 4,
     "p": 5
 }
+Resultado:
+{
+  "c": "1",
+  "p": "5"
+}
+Donde c representa al resultado de la operacion modulo y p al numero primo utilizado para el calculo.
 ```
