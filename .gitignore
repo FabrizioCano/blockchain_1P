@@ -16,6 +16,7 @@ yarn-error.log*
 
 # Public and generated files
 /public/
+/output/
 dist/
 out/
 coverage/
