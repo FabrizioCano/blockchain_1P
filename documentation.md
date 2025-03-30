@@ -46,8 +46,14 @@ snarkjs groth16 prove circuito_0001.zkey ../witness.wtns ../proof.json ../public
 
 ## 3) Verificacion de pruebas
 - Se procede a verificar que la prueba generada es valida y cumple con las restricciones definidas en el circuito.
-```circom
-snarkjs groth16 prove circuito_0001.zkey ../witness.wtns ../proof.json ../public.json
+
+- El script ``run_pruebas.sh`` contiene los comandos necesarios para ejecutar y verificar las pruebas. Se genera el witness y con snarkjs se verifica la prueba generada
+```bash
+    node ../circuito_js/generate_witness.js ../circuito_js/circuito.wasm "$INPUT_FILE" ../witness.wtns
+    snarkjs groth16 prove circuito_0001.zkey ../witness.wtns "../proof_${BASE_NAME}.json" "../public_${BASE_NAME}.json"
+
+    # Verificar
+    snarkjs groth16 verify verification_key.json "../public_${BASE_NAME}.json" "../proof_${BASE_NAME}.json"
 ```
 - Verificacion en nodejs:
 ```verify.js```:  en este archivo se utiliza la libreria snarkjs para manejar las operaciones de verificacion. Si la prueba es valida imprime ``Proof valid:True``
@@ -55,7 +61,7 @@ snarkjs groth16 prove circuito_0001.zkey ../witness.wtns ../proof.json ../public
 ``index.hmtl``: en este archivo se utiliza snarkjs para probar el verificador en un navegador
 
 ## 4) Ejemplos de uso
-- Se define el archivo input.json y se provee los valores de a b y p para testear el circuito.
+- Se define el archivo input1.json e input2.json y se provee los valores de a b y p para testear el circuito.
 ```circom
 node generate_witness.js circuito.wasm ../input.json ../witness.wtns
 ```
@@ -64,12 +70,12 @@ input.json:
 {
     "a": 5,
     "b": 4,
-    "p": 5
+    "p": 7
 }
 Resultado:
 {
-  "c": "1",
-  "p": "5"
+  "c": "6",
+  "p": "7"
 }
 Donde c representa al resultado de la operacion modulo y p al numero primo utilizado para el calculo.
 ```
