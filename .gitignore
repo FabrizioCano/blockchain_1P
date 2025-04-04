@@ -7,6 +7,11 @@ package-lock.json
 *.sym
 *.wtns
 
+#files
+proof_input1.json
+proof_input2.json
+public_input1.json
+public_input2.json 
 
 # Logs and temp files
 *.log

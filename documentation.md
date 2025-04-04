@@ -1,7 +1,8 @@
 # 1) Estructura del circuito
 
-El circuito escrito en Circom tiene la siguiente estructura:\
-a) Un template principal llamado ``Circuito()`` en donde se realizan las invocaciones a los demas templates involucrados en el circuito.\
+El circuito escrito en Circom tiene la siguiente estructura:
+
+a) Un template principal llamado ``Circuito()`` en donde se realizan las invocaciones a los demas templates involucrados en el circuito.
 
 - ``Suma()``: template que calcula la suma de dos numeros
 - ``Potencia()``: template que calcula el cuadrado de un numero
@@ -12,6 +13,7 @@ Se define la signal c y p como output publico mientras que a y b permanecen priv
 
 
 ## 2) Proceso de generación de pruebas
+El script ``setup.sh`` que inicializa y genera las pruebas tiene la siguiente estructura:
 ```circom
 snarkjs powersoftau new bn128 12 pot12_0000.ptau -v
 ```
@@ -39,9 +41,7 @@ snarkjs zkey export verificationkey circuito_0001.zkey verification_key.json
 ```
 - Se exporta la clave de verificacion en fromato JSON para su uso posterior.
 ```circom
-snarkjs groth16 prove circuito_0001.zkey ../witness.wtns ../proof.json ../public.json
-```
-- Por ultimo se genera la prueba para un conjunto de valores de entrada
+
 
 
 ## 3) Verificacion de pruebas
@@ -62,8 +62,10 @@ snarkjs groth16 prove circuito_0001.zkey ../witness.wtns ../proof.json ../public
 
 ## 4) Ejemplos de uso
 - Se define el archivo input1.json e input2.json y se provee los valores de a b y p para testear el circuito.
+- Se compila el circuito con: ```circom circuito.circom --r1cs --wasm --sym``` y se navega al directorio creado ```cd circuito_js```.
+-Luego se ejecutan los scripts ``../setup.sh`` y ``./run_pruebas.sh`` para verificar las pruebas.
 ```circom
-node generate_witness.js circuito.wasm ../input.json ../witness.wtns
+
 ```
 input.json:
 ```json
